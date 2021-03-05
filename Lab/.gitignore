@@ -1,0 +1,10 @@
+*/*
+*.*
+!.gitignore
+!README.md
+!LICENSE
+!CMakeLists.txt
+!include/**/*
+!source/**/*
+!tests/*
+!tasks/*
