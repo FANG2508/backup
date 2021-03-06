@@ -8,7 +8,9 @@
 \contentsline {subsection}{\numberline {1.7}差分树}{5}{subsection.1.7}% 
 \contentsline {subsection}{\numberline {1.8}并查集}{5}{subsection.1.8}% 
 \contentsline {subsection}{\numberline {1.9}矩阵树定理}{6}{subsection.1.9}% 
+\contentsline {subsection}{\numberline {1.10}滚动哈希 Rabin-Karp算法}{6}{subsection.1.10}% 
 \contentsline {section}{\numberline {2}软件}{7}{section.2}% 
 \contentsline {subsection}{\numberline {2.1}git}{7}{subsection.2.1}% 
 \contentsline {section}{\numberline {3}something}{8}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}\#if \#else \#endif}{8}{subsection.3.1}% 
+\contentsline {section}{\numberline {4}tikz}{8}{section.4}% 

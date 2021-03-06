@@ -1,0 +1,706 @@
+%!TEX program = xelatex
+\documentclass[cn,hazy,blue,screen,14pt]{note}
+\usepackage{tikz}
+\title{学习笔记}
+
+\author{}
+
+\version{0.00}
+\date{\zhtoday}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{数据结构}
+\subsection{红黑树}
+5个性质：
+
+1、每个结点红或黑
+
+2、根黑
+
+3、叶黑
+
+4、红节点子结点为黑
+
+5、每个结点到所有后代叶结点上黑色个数相同
+\\\\
+
+定理：红黑树高度至多为2lg(n+1)（证明：先归纳证明任意结点x子树至少$2^{bh(x)}-1$个内部节点，再由黑高至少n/2可得）
+
+
+
+\newpage
+\section{动态规划}
+\subsection{最优子结构}
+问题的最优解由相关子问题的最优解组合而成且子问题可以独立求解
+
+1. 证明最优解的第一个组成部分是做出一个选择
+
+2. 假定已经知道这个最优选择
+
+3. 这个选择产生了哪些子问题以及如何刻画子问题空间
+
+4. 利用cut-and-paste证明当原问题取得最优解时每个子问题的解都是最优解
+
+子问题之间应该两两无关
+
+算法会重复求解相同子问题而非一直生成新的子问题
+\subsection{子问题图}
+
+\newpage
+
+\section{贪心算法}
+最优子结构+贪心选择性质
+\\
+l. 确定问题的最优子结构．
+2. 设计一个递归算法
+3. 证明如果我们做出一个贪心选择，则只剩下一个子问题．
+4. 证明贪心选择总是安全的（步骤3、 4的顺序可以调换） ．
+5. 设计一个递归算法实现贪心策略．
+6. 将递归算法转换为迭代算法．\\
+更一般的，
+
+1. 将最优化问题转化为这样的形式：对其做出一次选择后，只剩下一个子问题需要求解．
+2. 证明做出贪心选择后，原问题总是存在最优解，即贪心选择总是安全的．
+3. 证明做出贪心选择后．剩余的子问题满足性质其最优解与贪心选择组合即可得到原问题的最优解，这样就得到了最优子结构\\
+
+\subsection{贪心选择性质}
+通过局部最优选择构造全局最优解。
+
+在动态规划方法中，每个步骤都要进行一次选择，但选择通常依赖于子问题的解。而贪心算法进行选择时可能依赖之前做出的选择，但不依赖任何将来的选择或是子问题的解。
+
+证明每个步骤做出贪心选择能生成全局最优解． 如定理16.1所示，这种证
+明通常首先考查某个子问题的最优解，然后用贪心选择替换某个其他选择来修改此解，从而得到一个相似但更小的子问题．
+
+\subsection{最优子结构}
+一个问题的最优解包含其子问题的最优解。
+
+当应用于贪心算法时，我们通常使用更为直接的最优子结构． 如前所述，我们可以假定， 通过对原问题应用贪心选择即可得到子问题． 我们兀正要做的全部工作就是论证，将子问题的最优解与贪心选择组合在一起就能生成原问题的最优解． 这种方法隐含地对子问题使用了数学归纳法，证明了在每个步骤进行贪心选择会生成原问题的最优解．
+
+\subsection{0-1背包问题}
+n个商品，每个商品有整数价值、重量，背包最多能容纳一定重量的物品。
+不能用贪心求解
+
+\subsection{赫夫曼编码}
+用于压缩数据。用码字代替原来字符。
+
+使用前缀码：没有任何码字是其他码字的前缀。解码过程使用一棵编码树。
+
+最优编码方案对应一棵满二叉树。
+
+编码树代价$B(T)=\sum _{c\in C}c.freq$ ·$d_{T}(c)$
+
+最优前缀码可以使用一种贪心算法来构造编码树，即huffman code：将所有节点按freq为关键字保存在最小优先队列Q。执行n-1次从Q中取出两个对象，生成一个新对象，其左右子结点为两个对象，freq为子结点freq之和，重新放回Q中，最后剩下的就是根节点。O(n lg n)
+\\
+\\
+正确性：
+
+贪心选择性质
+
+1、令C为一个字母表，其中每个字符$c\in C$都有一个频率,c.freq。令x和y是C中频率最低的两个字符，那么存在C的一个最优前缀码，x和y的码字长度相同，且只有最后一个二进制位不同。
+
+证明：考虑编码树最深的兄弟叶结点，可以证明用x、y替换后总代价不可能增加\\\\
+
+最优子结构
+
+2、令C为一个给定的字母表．其中每个字符c都定义了一个频率c.freq。令x和y是C中频率最低的两个字符。令C'为C去掉字符x和y,加入一个新字符z后得到的字母表，类似C，也为C'定义freq。令T为字母表C'的任意一个最优前缀码对应的编码树，于是我们可以将T'中叶结点z替换为一个以x和y为子结点的内部结点，得到树T，而T表示字母表C的一个最优前缀码。用引理1（令x、y为兄弟节点）和反证法推出T'不是最优的，矛盾。
+
+\subsection{something else}
+
+
+\newpage
+\section{摊还分析}
+\subsection{聚合分析Aggerate analysis}
+平均
+\subsection{核算法accouting method}
+信用
+\subsection{势能法potential method}
+\subsection{动态表}
+
+\newpage
+\section{并查集}
+
+
+\newpage
+\section{基本图算法}
+\subsection{BFS}
+源节点只有一个
+
+predecessor subgraph/breadth-first tree: $G_{\pi}=(V_{\pi},E_{\pi})$, $V_{\pi}=\{v\in V:v.\pi\neq NIL\}\cup \{s\}$, $E_{\pi}=\{(v.\pi,v):v\in V_{\pi}-\{s\}\}$(tree edges)
+\subsection{DFS}
+重复多次直到发现所有节点，故源节点可能有多个
+
+predecessor subgraph/depth-first trees/forests$V_{\pi}=V$
+
+括号化结构
+
+括号化定理/parenthesis theorem：$[u.d,u.f]$和$[v.d,v.f]$决定了u,v的后代关系
+
+白色路径定理/white-path theorem：在有向或无向图$G=(V,E)$的深度优先森林中，v是u的后代当且仅当在u.d时，存在一条从u到v的全部由白色节点构成的路径。
+
+深度优先树林中定义四种边(u,v)：
+
+1、树边：v是由(u,v)发现的。v是白色
+
+2、后向边：将u连接到某个祖先节点v的边（自循环也是）v是灰色
+
+3、前向边：将u连接到后代的边v。v是黑色
+
+4、横向边：其他所有的边。v是黑色
+
+定理：无向图G深度优先搜索时每条边为树边或后向边
+
+\subsection{拓扑排序}
+有向无环图G的拓扑排序：所有结点的一种线性次序，满足若G包含$(u,v)$，则u在排序中处于v的前面
+
+DFS实现，排序次序与结点完成时间相反
+
+\subsection{强连通分量}
+强弱连通分量定义在有向图中，强连通分量：任意两点都存在u到v或v到u的路径
+
+有向图的转置：所有边反向
+
+分量图：将图中所有的强连通分量收缩为1个点。有向无环
+
+d(U)/f(U)表示结点集合U中最早发现时间和最晚完成时间
+
+定理：若存在一条有向边(u,v)连接了G中两个强连通分量，则f(u所在集合)>f(v所在集合)
+
+\newpage
+\section{网络流}
+\subsection{流网络}
+流网络：有向图G，每条边容量值c非负，结点之间只存在一条单向边。不存在的边容量为0，不允许自循环，故存在源点s和汇点t使得任意结点都在s-t路径上。
+
+流：定义在G上的实值函数，满足两条限制：
+
+1、容量限制：$\forall u,v\in V$, $0\leq f(u,v)\leq c(u,v)$
+
+2、流量守恒：$\forall u\in V-\{s,t\}$,$\sum_{v\in V}f(v,u)=\sum_{v\in V}f(u,v)$
+
+流的值$|f|=\sum _{v\in V}f(s,v)-\sum_{v\in V}f(v,s)$
+
+反平行：$(v_{1},v_{2})$和$(v_{2},v_{1})$，可以加一个中间结点来转换。
+
+多源多汇：超级结点，指向所有源点或所有汇点指向，容量无限
+
+\newpage
+\section{图论}
+\subsection{基本术语}
+图graph：有限非空顶点集V(vertex/point/node set)+二元子集构成的边集E(edge/line set)。本质上是两个集合的有序对。可记为G=(V,E)。
+
+<a,b>有向边，$\{a,b\}$无向边
+
+V(G),E(G)强调是图G的点集和边集。当V(G)=V(H),E(G)=E(H)时图相等(equal)，记为G=H
+
+邻接点(adjacent):边uv在图G中
+
+阶(order)：顶点个数
+
+size：边数
+
+平凡图(trivial graph)：只有一个点
+
+labeled/unlabeled graph
+
+If $e = uv$ is an edge of $G$, then the adjacent vertices $u$ and $v$ are said to be
+joined by the edge $e$. The vertices $u$ and $v$ are referred to as neighbors of each other. In this case, the
+vertex $u$ and the edge $e$ (as well as $v$ and $e$) are said to be incident with each other. Distinct edges
+incident with a common vertex are adjacent edges.
+
+子图subgraph：$H\subset G$，即$V(H)\subset V(G),$ $E(H)\subset E(G)$
+
+真子图proper subgraph：V或E为真子集
+
+生成图spanning subgraph：G的子图中和G顶点集相同的图
+
+导出子图induced subgraph：若G的子图F中包含u、v两个点且边uv在G中，则uv在F中。（subgraph of G induced by S，记为G[S]）
+
+edge-induced subgraph：类似。记为G[X]
+
+路径walk/W：从u到v的顶点序列。可表示为：$W=(u=v_{0},v_{1},...,v_{k}=v)$ ($v_{i}v_{i+1}\in E(G)$)
+如果u=v则为closed，否则open。走过的边数称为路径长度
+
+trivial walk:路径长度为0
+
+trail/T：无重复边的walk
+
+path/P：无重复点的walk，一定是trail
+
+定理：如果图中包含了长为$l$的$u-v$ walk，则必定存在$u-v$ path，长度至多为$l$
+
+circuit/C: closed trail of length 3 or more
+
+cycle/C': circuit repeats no vertex except for first and last. 
+
+k-cycle: length of k
+
+odd/even cycle: odd/even length
+
+u are v are connected: G contains a u-v path
+
+connected graph: 所有点connected
+
+A connected subgraph of G that is not a
+proper subgraph of any other connected subgraph of G is a component of G. The number denoted by k(G). G is connected iff k(G)=1
+
+Union: $G=G_{1}\cup G_{2}\cup ... \cup G_{k}$ ($G_{i}$两两不相交，且G中的每个点或边都恰好在某个中)
+
+定理：考虑定义在G中点集上的关系R，若对任意连通的两点有关系R，则R为等价关系
+
+distance：最短path(geodesic)，记为$d_{G}(u,v)$或$d(u,v)$
+
+diameter/diam(G)：连通图中的最大distance
+
+定理：G is a connected graph of order 3 or more iff G contains two distinct vertices
+u and v such that G − u and G − v are connected
+
+图有时也可以称为path($P_{n}$)或cycle($C_{n}$)
+
+complete graph/$K_{n}$：任意两点相邻
+
+complement/$\bar{G}$：顶点集相同，边集为G的边集的补集
+
+empty graph：只有点没有边
+
+定理：如果G disconnected，则$\bar{G}$ connected
+
+bipartite graph: 顶点集可被划分成两个集合(bipartite sets)，使得每条边的端点分别在两个集合中
+
+定理：bipartite iff contain no odd cycles
+
+complete bipartite graph: U,W中任一点都和另一个集合中的任一点相邻。若|U|=s，|W|=t，可记为$K_{s,t}$或$K_{t,s}$，如果有一个为1，则称为star
+
+类似的可以定义(complete) k-partite graph
+
+join/G+H：G$\cup$H和所有连接G和H中的点的边
+
+Cartesian product/G$\times$H ：V(G$\times$H)=V(G)$\times$V(H)，Two distinct vertices (u, v) and (x,
+y) are adjacent in G × H if either (1) u = x and vy $\in$ E(H) or (2) v = y and ux $\in$ E (G)
+
+G$\times$H and H$\times$G are isomorphic
+
+multigragh: 两点间有有限多条边
+
+parallel edges: 重复的边
+
+loop: 连接同一个点的边
+
+pseudograph: 允许包含parallel edges和loop
+
+digraph(directed graph), directed edges or arcs. adjacent to/from
+
+oriented graph/orientation of G: 两点间至多一条有向边
+
+\subsection{度}
+degree fo a vertex: the number of edges incident with v, denoted by $deg_{G} v$ or deg v
+
+neighborhood of v: the set N(v) of neighbors of v
+
+isolated vertex: degree 0
+
+end-vertex/leaf: degree 1
+
+minimum/maximum degree of G: $\delta(G)/\Delta(G)$
+
+The First Theorem of Graph Theory: $\sum _{v\in V(G)} deg v=2m$(size)
+
+odd/even vertex
+
+定理：如果deg u+deg v$\geq$n-1对任意u，v成立，则G连通且diam(G)$\leq 2$
+
+sharpness
+
+outdegree/indegree
+
+regular graph: 所有点度数相同（r-regular）
+
+cubic graph: 3-regular graph
+
+定理：存在n阶r-regular graph iff r、n至少一个为偶
+
+Harary graph $H_{r,n}$
+
+定理：任意G满足$\Delta(G)\leq r$，存在r-regular graph H包含了G作为induced subgraph
+
+degree sequence
+
+graphical degree sequence:可以对应某些图的有限个非负整数的序列
+
+定理：一个非增序列$d_{1},d_{2},...,d_{n}(n\geq 2)$ graphical iff $d_{2}-1,d_{3}-1,...,d_{d_{1}+1}-1,d_{d_{1}+2},...,d_{n}$ graphical
+
+\subsection{Isomorphic graph}
+isomorphic graphs / $G\cong H$: $\exists$ one-to-one correspondence $\phi$ from V(G) to V(H), $uv \in E(G)$ iff $\phi(u)\phi(v) \in E(H)$ 
+
+isomorphism: $\phi$
+
+self-complementary: $G\cong \bar{G}$
+
+\subsection{Tree}
+bridge: 边e，G连通，G-e不连通，连接了两个components，故$k(G-e)=k(G)+1$
+
+定理：$e$ is a bridge iff $e$ lies on no cycle in G
+
+acyclic graph：无环
+
+tree/T：acyclic connected graph，每条边都是bridge
+
+rooted tree：选定某个点作为root
+
+forests：不连通trees
+
+定理：每个nontrival tree有至少2个end-vertices
+
+定理：n阶tree有n-1条边（数学归纳法）
+
+定理：the size of connected graph of order n is at least n-1(证明：假设存在最小的size为n-2的图，则去掉一个点还是连通，矛盾)
+
+定理：如果(1)connected (2)acyclic (3)size=order-1满足两个则为tree
+
+定理：如果G的最小度$\geq k-1$，则T同构于G的某些子图
+
+spanning tree：spanning subgraph and is a tree
+
+所有连通图都包含生成树
+
+cost or weight of edge/$w(e)$
+
+For subgraph H of G, $w(H)=\sum_{e\in E(H)}w(e)$
+
+minimum spanning tree：图G的生成树中权重最小的
+
+Kruskal算法：每次选择剩余的边中权重最小且不成环的
+
+正确性证明：假设生成树T不是最小的，考虑与T最相似的最小生成树H，设$e_{i}$是T中第一个不属于H的边，则$G_{0}=H+e_{i}$包含了cycle C。因为T没有cycle，所以C中有边$e_{0}$不在T中，则$T_{0}=G_{0}-e_{0}$是G的生成树且$w(T_{0})=w(H)+w(e_{i})-w(e_{0})$,则$w(e_{0})\leq w(e_{i})$，而根据Kruskal算法，$w(e_{i})\leq w(e_{0})$，因此$w(e_{i})=w(e_{0})$，则$T_{0}$也是最小生成树，但$T_{0}$比H包含了更多和T相同的边，矛盾
+
+Prim算法：每次选择和当前已连接的点相连的边中权重最小的
+
+正确性证明：设Prim算法生成的树T起始点为u，边依次为$e_{1},...,e_{n-1}$。反证法。考虑和T相同的边最多的最小生成树的集合$\mathbb{H}$。记k为$\mathbb{H}$中树H和T从$e_{1}$开始有最多相同边的数量，顶点集U为这些边的顶点，若k=0则U=$\{u\}$。根据Prim算法$e_{k+1}$分别连接了U和$V(T)-U$中的两个点。则$H+e_{k+1}$包含了cycle C且$e_{k+1}$在C上。因此C包含了另一条连接了U和$V(T)-U$中的两个点的边$e_{0}$，则根据Prim算法和H最小可以推出$w(e_{0})=w(e_{k+1})$...
+
+Cayley Tree Formula: 特定顶点集的n阶树共有$n^{n-2}$种
+
+矩阵树定理：n阶图G，邻接矩阵为A=[$a_{ij}$]，C=[$c_{ij}$]，其中
+
+$$c_{ij}=
+\left\{
+\begin{array}{cc}
+deg v_{i}& if\qquad i=j\\
+-a_{ij}& if\qquad i\neq j\\
+
+\end{array}
+\right.
+$$
+
+则生成树数目等于任意余子式的值
+
+有向树：有且仅有一个点入度为0，其他点入度为1
+
+\subsection{连通度}
+割点：连通图G去掉点v后不连通
+
+定理：如果v是bridge的一个端点且v度数大于2则v为割点
+
+定理：v是割点，u、w在G-v的两个component中，则v在所有u、w路径上
+
+定理：如果v是离某个点的最远的一点，则v不是割点
+
+不可分图：不包含割点
+
+定理：不可分图当且仅当任意两点在一个cycle中
+
+block块：极大不可分子图
+
+任何两个block边不同、最多一个共同顶点，且该顶点必为切点
+
+vertex-cut割点集  edge-cut割边集
+
+vertex-connectivity $0\leq \kappa(G)\leq n-1$最小割点集的势
+
+edge-connectivity $0\leq \lambda(G)\leq n-1$最小割边集的势
+
+k-connnected: $\kappa(G)\geq k$
+
+k-edge-connnected: $\lambda(G)\geq k$
+
+定理：$\kappa(G)\leq \lambda(G)\leq \delta(G)$
+
+定理：$\kappa(G)\leq \lfloor\frac{2m}{n} \rfloor$
+
+u-v 分割集（点）：G-S不连通且u、v在不同component
+
+
+门杰定理：u-v最小分割集的势等于完全不同的u-v路径的最大数目
+
+定理：k-connected等价于任意u、v之间都至少有k条不相交的path
+
+定理：k-connected图中任意k个点连接到一个新的点，则新的图还是k-connected
+
+定理：k-connected则任意k个点在一个cycle中
+
+\subsection{可遍历性}
+Eulerian circuit欧拉回路：包含所有的边的回路
+
+Eulerian trail欧拉路径：包含所有边的通路
+
+欧拉图：包含欧拉回路的图
+
+定理：欧拉图充要条件所有点度为2
+
+Hamiltonian cycle哈密顿回路：包含所有点的回路
+
+哈密顿路径
+
+必要条件k(G-S)$\leq$|S|
+
+充分条件任意两点度数和大于等于n
+
+定理：对于给定的u、v度数和大于等于n，则G+uv为哈密顿图当且仅当G为哈密顿图
+
+闭包C(G)：连接图中所有度数和大于n的点对
+
+定理：G为哈密顿图当且仅当闭包为哈密顿图
+
+定理：如果对所有$j\in [1,n/2]$，度数小于等于j的点少于j个，则G为哈密顿图
+
+
+\subsection{匹配分解}
+matching匹配/边独立集：两两不相邻
+
+N(X)邻居
+
+Hall条件|N(X)|>=|X|，X为任意子集
+
+定理：对于$|U|\leq |W|$，可以找到|U|组匹配当且仅当满足Hall条件
+
+定理：一个由若干非空有限集合组成的collection中存在代表元素当且仅当任意k个集合的并至少有k个元素
+
+定理：每个正则二部图都有完美匹配
+
+$\alpha$最大独立 $\beta$最小覆盖 $'$是边
+\subsection{平面图}
+定义：可以被画成没有交叉边
+
+Region
+
+boundary：region的边或点
+
+欧拉恒等式：n-m+r=2
+
+如果m>3n-6则非平面图，推论：每个平面图至少有一个5度或以下的点
+
+maximal planar：不能再加边
+
+(Kuratowski’s Theorem) A graph G is planar if and only if G does not contain a subdivision of K5 or K3,3 as a subgraph.
+
+\subsection{染色}
+
+
+\section{群论}
+
+\subsection{群}
+代数系统：运算封闭
+
+代数系统+结合律$\rightarrow$半群+单位元$\rightarrow$独异点+逆元$\rightarrow$群
+
+群的第二定义：半群且形如ax=b,xa=b有唯一解
+
+\subsection{循环群cyclic group}
+定理：Let $G$ be a group and $a$ be any element in $G$. Then the set $\left<a\right> = \{a^{k}:k \in\mathbb{Z}\}$
+is a subgroup of $G$. Furthermore, it is the smallest subgroup of $G$ that contains $a$.
+
+
+cylic subgroup：G中任一元素$a$生成的$\left<a\right>$
+
+cylic group: G=$\left<a\right>$ 
+
+generator of G: a。可能多个，比如$\mathbb{Z}_{6}$有1和5
+
+order: G中任意元素a，最小的正整数n使得$a^{n}=e$，写作|a|=n，如果不存在这样的n则为$\infty$
+
+定理：循环群一定是阿贝尔群
+
+定理：循环群子群一定是循环群
+
+定理：n阶循环群的一个generator为a，若$b=a^{k}$，则b的order为$\frac{n}{gcd(k,n)}$
+
+推论：$\mathbb{Z}_{n}$的generator为1到n中与n互质的所有数
+
+复数：$z=r$ cis $\theta$
+
+proposition: $z=r$ cis $\theta$, $w=s$ cis $\phi$，$zw=rs$ cis $(\theta+\phi)$
+
+the nth roots of unity: 满足$z^{n}=1$的复数
+
+A generator for the group of the nth roots of unity is called a primitive nth root of unity.
+
+定理：$z^{n}=1$的the nth roots of unity为$z=cis \frac{2k\pi}{n}$
+
+\subsection{Permutation}
+the permutations of a set X fomr a group $S_{X}$，If X is a finite set, we can assume $X=\{1, 2, ... ,n\}$. $S_{n}$ symmetric group on n letters
+
+cycle of length k: (154) 1->5, 5->4, 4->1
+
+disjoint cycle: 没有相同元素
+
+$\sigma$, $\tau$是两个disjoint cycle in $S_{X}$，则$\sigma\tau=\tau\sigma$
+
+定理：所有permutation都是disjoint cycles的乘积（构造性证明）
+
+transpositions: cycle of length 2, any cycle can be written as the product of transpositions, and there is no unique way to represent
+
+引理：If the identity is written as the product of r transpositions, $id=\tau_1\tau_2...\tau_{r}$, then r is even
+
+定理：permutation can only be expressed as the product of an even or odd number of transpositions
+
+permutation is even or odd$\uparrow$
+
+alternating group on n letters: the set of all even permutations, $A_{n}$
+
+定理：$A_{n}$是$S_{n}$子群
+
+\subsection{dihedral}
+the nth dihedral group: the group of rigid motions of a regular n-gon.
+
+定理：The dihedral group, $D_{n}$, is a subgroup of $S_{n}$ of order 2n.
+
+定理：$D_{n}$由r、s两个元素的所有积组成，满足$r^{n}=1$, $s^{2}=1$, $srs=r^{-1}$。（$D_{n}$分翻转和旋转，旋转$360/n$记为r，）
+
+\subsection{cosets陪集/伴集}
+定义：G的子群H的left coset(左陪集）是G选定一个g得到的$gH=\{gh:h\in H\}$，同理可定义right coset
+
+引理：H是G的子群，$g_{1},g_{2}\in G$，则下列条件等价
+
+\qquad 1. $g_{1}H=g_{2}H$
+
+\qquad 2. $Hg_{1}^{-1}=Hg_{2}^{-1}$
+
+\qquad 3. $g_{1}H\subset g_{2}H$
+
+\qquad 4. $g_{2}\in g_{1}H$
+
+\qquad 5. $g_{1}^{-1}g_{2}\in H$
+
+定理：H是G子群，则H的所有left coset划分G
+
+定理：left coset和right数量相同
+
+index：H的left coset的数量，记作$[G:H]$
+
+\subsection{Lagrange's Theorem}
+命题：H是G子群，g是G中元素，定义映射$\phi:H\rightarrow gH$为$\phi(h)=gh$，这是双射，故因此H和gH元素个数相同
+
+定理：G有限，H子群，则$|G|/|H|=[G:H]$
+
+推论若干
+
+定理：两个$S_{n}$中的cycle长度相同当且仅当存在$\sigma\in S_{n}$使得$\mu=\sigma\tau\sigma^{-1}$
+
+\subsection{Fermat's and Euler's Theorems}
+欧拉函数：$\phi(n)=$小于n的与n互质的数的个数。
+
+定理：$U(N)$为$group of unit in \mathbb{Z}_{n}$，则$|U(n)|=\phi(n)$
+
+欧拉定理：a,n互质则$a^{\phi(n)}\equiv 1(mod$ $n)$
+
+费马小定理：p为质数且a、p互质，则$a^{p-1}\equiv 1(mod$ $p$)
+
+
+
+\subsection{isomorphism}
+定义：两个群$(G,\cdot)$，$(H,\circ)$ isomorphic，当存在一个双射$\phi:G\rightarrow H$满足$\phi(a\cdot b)=\phi(a)\circ \phi(b)$对任何$a,b\in G$成立。记作$G\cong H$。$phi$成为一个isomorphism
+
+定理：令$\phi:G\rightarrow H$为一个isomorphism，则下述结论成立：
+
+\qquad 1. $\phi^{-1}:H\rightarrow G$ is an isomorphism
+
+\qquad 2. |G|=|H|
+
+\qquad 3. G is abelian, then H is abelian
+
+\qquad 4. G is cyclic, then H is cyclic
+
+\qquad 5. G有n阶子群，则H也有n阶子群
+
+定理：无限阶循环群同构于$\mathbb{Z}$
+
+定理：n阶循环群同构于$\mathbb{Z}_{n}$
+
+定理：质数p阶群同构于$\mathbb{Z}_{p}$
+
+Cayley定理：任一个群同构于a group of permutations
+
+\subsection{direct product}
+external direct product: 两个群G、H的笛卡尔积G$\times$H，定义二元运算为$(g_{1},h_{1})(g_{2},h_{2})=(g_{1}\cdot g_{2},h_{1}\circ h_{2})$，得到的群
+
+定理：$(g,h)\in G\times H$，g、h分别为有限阶r、s，则$(g,h)$的阶数为r,s最小公倍数。可推广到n个群
+
+定理：$\mathbb{Z}_{m}\times \mathbb{Z}_{n}$群isomorphic to $\mathbb{Z}_{mn}$当且仅当m，n互质。可推广到n个群
+
+internal direct product: 群G包含两个子群H、K，且满足：
+
+\qquad 1. $G=HK=\{hk:h\in H,k\in K\}$
+
+\qquad 2. $H\cap K=\{e\}$
+
+\qquad 3. $kh=hk$
+
+定理：G是H、K的internal direct product，则G同构于$H\times K$，可推广到n个
+
+\subsection{factor groups and normal groups}
+normal groups: subgroup H is normal in G if $\forall g\in G$, $gH=Hg$
+
+定理：N是G子群，下列条件等价：
+
+\qquad 1. N is normal  
+
+\qquad 2. $\forall g\ in G$, $gNg^{-1}\subset N$
+
+\qquad 3. $\forall g\ in G$, $gNg^{-1}= N$
+
+factor/quotient group: N is normal, then the cosets of N form a group G/N under the operation (aN)(bN)=abN
+
+定理：G/N阶为[G:N] 
+
+\subsection{The Simplicity of the Alternating Group}
+simple group: 没有非平凡的normal子群
+
+引理：任何alternating group $A_{n}$可以由3-cycles生成
+
+引理：令N为$A_{n}$的normal子群，如果N含有3-cycle，则N$=A_{n}$
+
+引理：$n\geq 5$时，所有$A_{n}$的nontrivial normal子群含有3-cycle
+
+定理：$A_{n}$ is simple for n>=5
+
+
+
+\subsection{homomorphism同态}
+homomorphism: groups $(G,\cdot)$ and $(H,\circ)$, map $\phi: F\rightarrow H$ such $\phi(g_{1})\circ\phi(g_{2})$ for $g_{1},g_{2}\in G$
+
+homomorphic image of $\phi$: range of $\phi$ in H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+a
+\end{document}
+
