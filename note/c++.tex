@@ -1,0 +1,49 @@
+%!TEX program = xelatex
+\documentclass[cn,hazy,blue,screen,14pt]{note}
+\usepackage{tikz}
+\title{学习笔记}
+
+\author{}
+
+%\version{0.00}
+\date{\zhtoday}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\noindent lambda表达式: [captures] (params) -> return type $\{$Statments;$\}$
+
+
+[] 不截取任何变量
+
+[\&] 截取外部作用域中所有变量，并作为引用在函数体中使用
+
+[=] 截取外部作用域中所有变量，并拷贝一份在函数体中使用
+
+[=, \&foo] 截取外部作用域中所有变量，并拷贝一份在函数体中使用，但是对foo变量使用引用
+
+[bar] 截取bar变量并且拷贝一份在函数体重使用，同时不截取其他变量
+
+[this] 截取当前类中的this指针。如果已经使用了\&或者=就默认添加此选项。
+\\\\
+不能通过类型名来显式声明对应的对象，但可以利用auto关键字和类型推导：
+
+auto f=[](int a,int b)$\{$return a>b;$\}$;
+
+
+泛型lambda (C++14)：[](const auto\& a,const auto\& b)$\{$return a>b;$\}$
+
+\newpage
+
+\noindent transform: 对容器给定范围内元素进行操作
+
+一元： transform(iterator begin, iterator end, iterator output.begin, operation) //operation可以是函数指针、函数对象或lambda表达式
+
+二元： transform(iterator begin, iterator end, iterator begin2, iterator output.begin, operation) //第二个容器取的end取决于第一个容器的元素个数
+
+\end{document}
+
